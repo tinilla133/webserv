@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="alternate icon" class="js-site-favicon" type="image/png" href="https://cdn-icons-png.freepik.com/512/13643/13643568.png">
+  <title>Webserv 42 Home</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #74b9ff, #0984e3);
+      margin: 0;
+      padding: 20px;
+      color: white;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      font-size: 3em;
+      margin-bottom: 40px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    nav {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 12px;
+      transition: color 0.2s ease;
+    }
+    nav a:hover {
+      color: #ffeaa7;
+    }
+    .section {
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      padding: 30px;
+      margin: 30px 0;
+      backdrop-filter: blur(10px);
+    }
+    .btn {
+      background: linear-gradient(45deg, #00b894, #00cec9);
+      color: white;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      display: inline-block;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    .btn.form {
+      background: linear-gradient(45deg, #fdcb6e, #e17055);
+    }
+    .btn.upload {
+      background: linear-gradient(45deg, #00cec9, #0984e3);
+    }
+    .btn.cgi {
+      background: linear-gradient(45deg, #9b59b6, #8e44ad);
+    }
+    .btn.session {
+      background: linear-gradient(45deg, #2ecc71, #27ae60);
+    }
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      font-size: 0.9em;
+      color: #dfe6e9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🚀 Bienvenido a Webserv 42</h1>
+
+    <nav>
+      <a href="/index.html">🏠 Home</a> |
+      <a href="/form.html">📝 Formulario</a> |
+      <a href="/upload.html">📤 Upload</a> |
+      <a href="/cgi.html">⚙️ CGI Test</a> |
+      <a href="/nonexistent.html">❌ Error 404</a>
+    </nav>
+
+    <div class="section">
+      <h2>🌐 Introducción</h2>
+      <p>Este servidor HTTP fue desarrollado en C++98 como parte del proyecto <strong>Webserv</strong> de 42. 
+      Soporta métodos <strong>GET</strong>, <strong>POST</strong> y <strong>DELETE</strong>, 
+      ejecución de <strong>CGI (Python y PHP)</strong>, subida de archivos y manejo de <strong>cookies y sesiones</strong>.</p>
+    </div>
+
+    <div class="section">
+      <h2>🚀 Acciones rápidas</h2>
+      <p>Selecciona una de las pruebas para explorar las funcionalidades del servidor:</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-top: 20px;">
+        <a href="/form.html" class="btn form">📝 Formulario POST</a>
+        <a href="/upload.html" class="btn upload">📤 Subir Archivo</a>
+        <a href="/cgi.html" class="btn cgi">⚙️ Ejecutar CGI</a>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>📚 Información del Proyecto</h2>
+      <p><strong>Autores:</strong> aurodrig, fmorenil, fvizcaya</p>
+      <p><strong>Ubicación:</strong> Campus 42 Madrid – Proyecto Webserv</p>
+      <p><strong>Objetivo:</strong> Implementar un servidor HTTP no bloqueante 
+      que simule el comportamiento básico de NGINX con soporte CGI, upload y sesiones.</p>
+    </div>
+
+    <footer>© 2025 Webserv 42 — by Maracas</footer>
+  </div>
+</body>
+</html>

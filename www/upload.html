@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+    <link rel="alternate icon" class="js-site-favicon" type="image/png" href="https://cdn-icons-png.freepik.com/512/13643/13643568.png">
+  <title>📤 Subida de Archivos | Webserv 42</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #74b9ff, #0984e3);
+      margin: 0;
+      padding: 20px;
+      color: white;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3em;
+      margin-bottom: 40px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    nav {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 12px;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: #ffeaa7;
+    }
+
+    .upload-section {
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      padding: 40px;
+      backdrop-filter: blur(10px);
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    .delete-section {
+      margin-top: 35px;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+
+    p {
+      font-size: 1.1em;
+      margin-bottom: 25px;
+    }
+
+    input[type="file"] {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      padding: 10px;
+      width: 100%;
+      color: #fff;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      cursor: pointer;
+    }
+
+    input[type="file"]::file-selector-button {
+      background: linear-gradient(45deg, #00cec9, #0984e3);
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(45deg, #0984e3, #00cec9);
+    }
+
+    input[type="submit"] {
+      background: linear-gradient(45deg, #2ecc71, #27ae60);
+      border: none;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(45deg, #27ae60, #2ecc71);
+    }
+    .btn-delete {
+      background: linear-gradient(45deg, #e74c3c, #c0392b);
+      margin-top: 10px;
+    }
+    .btn-delete:hover {
+      background: linear-gradient(45deg, #c0392b, #e74c3c);
+    }
+
+    .tips {
+      margin-top: 25px;
+      font-size: 0.95em;
+      color: #ecf0f1;
+      opacity: 0.9;
+    }
+    .status-message {
+      margin-top: 15px;
+      font-size: 0.95em;
+      min-height: 1.2em;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 0.9rem;
+      color: #dfe6e9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📤 Subida de Archivos</h1>
+
+    <nav>
+      <a href="/index.html">🏠 Home</a> |
+      <a href="/form.html">📝 Formulario</a> |
+      <a href="/cgi.html">⚙️ CGI Test</a> |
+      <a href="/nonexistent.html">❌ Error 404</a>
+    </nav>
+
+    <div class="upload-section">
+      <p>Selecciona un archivo y súbelo al servidor mediante una petición <strong>POST</strong>.</p>
+
+      <form action="/uploads" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" required />
+        <br />
+        <input type="submit" value="🚀 Subir Archivo">
+      </form>
+
+      <p class="tips">Los archivos se almacenan en la carpeta configurada en <code>upload_store</code>.</p>
+
+      <div class="delete-section">
+        <h2>🗑️ Borrar archivo</h2>
+        <p>Introduce el nombre del archivo que deseas eliminar de la carpeta de uploads.</p>
+        <p id="delete-base" style="color:#ffeaa7;font-size:0.95em;margin-bottom:15px;"></p>
+        <form id="delete-form">
+          <input type="text" name="filename" placeholder="ej: foto.png" required />
+          <br />
+          <input type="submit" value="Eliminar archivo" class="btn-delete">
+        </form>
+        <div id="delete-status" class="status-message"></div>
+      </div>
+    </div>
+
+    <footer>© 2025 Webserv 42 — Upload system by aurodrig</footer>
+  </div>
+  <script>
+    const deleteForm = document.getElementById('delete-form');
+    const statusBox = document.getElementById('delete-status');
+    const baseLabel = document.getElementById('delete-base');
+    const uploadBasePath = '/uploads/';
+    const normalizedBase = uploadBasePath.endsWith('/') ? uploadBasePath.slice(0, -1) : uploadBasePath;
+    baseLabel.textContent = `Ruta por defecto: ${normalizedBase}/`;
+
+    deleteForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const filename = deleteForm.filename.value.trim();
+      if (!filename) {
+        statusBox.textContent = 'Debes escribir un nombre de archivo.';
+        return;
+      }
+      try {
+        const sanitized = filename.replace(/^\/+/, '');
+        const targetPath = `${normalizedBase}/${sanitized}`;
+        const response = await fetch(`${targetPath}`, {
+          method: 'DELETE'
+        });
+        if (response.ok) {
+          statusBox.textContent = `✅ Archivo "${targetPath}" eliminado correctamente.`;
+        } else {
+          statusBox.textContent = `⚠️ No se pudo eliminar "${targetPath}" (código ${response.status}).`;
+        }
+      } catch (error) {
+        statusBox.textContent = '⚠️ Error de red al intentar borrar el archivo.';
+      }
+      deleteForm.reset();
+    });
+  </script>
+</body>
+</html>

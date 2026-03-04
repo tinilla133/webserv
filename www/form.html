@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webserv 42 | Formulario POST</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #fdcb6e, #e17055);
+      margin: 0;
+      padding: 20px;
+      color: #2d3436;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.95);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    nav {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    nav a {
+      color: #d35400;
+      font-weight: bold;
+      text-decoration: none;
+      margin: 0 12px;
+      transition: color 0.2s ease;
+    }
+    nav a:hover {
+      color: #e67e22;
+    }
+    h1 {
+      text-align: center;
+      margin-top: 0;
+      font-size: 2.5em;
+      color: #d35400;
+    }
+    p {
+      text-align: center;
+      color: #636e72;
+    }
+    form {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    label {
+      font-weight: bold;
+      color: #2d3436;
+    }
+    input, textarea {
+      padding: 12px 15px;
+      border-radius: 12px;
+      border: 2px solid #ffeaa7;
+      font-size: 1em;
+      transition: border-color 0.2s ease;
+      font-family: inherit;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #e17055;
+    }
+    button {
+      background: linear-gradient(45deg, #fd9644, #fa8231);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 15px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      box-shadow: 0 8px 25px rgba(250,130,49,0.3);
+    }
+    button:hover {
+      transform: translateY(-3px);
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 25px;
+      text-decoration: none;
+      color: #d35400;
+      font-weight: bold;
+      text-align: center;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <a href="/index.html">🏠 Home</a> |
+      <a href="/form.html">📝 Formulario</a> |
+      <a href="/upload.html">📤 Upload</a> |
+      <a href="/cgi.html">⚙️ CGI Test</a> |
+      <a href="/nonexistent.html">❌ Error 404</a>
+    </nav>
+
+    <h1>📝 Formulario POST</h1>
+    <p>Envía una petición POST a nuestro backend. Sirve para comprobar que el servidor procesa formularios correctamente.</p>
+
+    <form action="/cgi-bin/form_handler.py" method="POST">
+      <div>
+        <label for="name">Nombre</label>
+        <input type="text" id="name" name="name" placeholder="Ada Lovelace" required>
+      </div>
+      <div>
+        <label for="email">Correo</label>
+        <input type="email" id="email" name="email" placeholder="ada@webserv.42" required>
+      </div>
+      <div>
+        <label for="message">Mensaje</label>
+        <textarea id="message" name="message" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+      </div>
+      <button type="submit">Enviar</button>
+    </form>
+
+    <a href="/index.html" class="back-link">← Volver al Home</a>
+  </div>
+</body>
+</html>
